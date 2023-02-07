@@ -7,19 +7,17 @@ const Navigation = (props) => {
     <nav className={classes.nav}>
       <ul>
         {props.isLoggedIn && (
-          <li>
-            <a href="/">Users</a>
-          </li>
-        )}
-        {props.isLoggedIn && (
-          <li>
-            <a href="/">Admin</a>
-          </li>
-        )}
-        {props.isLoggedIn && (
-          <li>
-            <button onClick={props.onLogout}>Logout</button>
-          </li>
+          <>
+            <li>
+              <a href='/'>Users</a>
+            </li>
+            <li>
+              <a href='/'>Admin</a>
+            </li>
+            <li>
+              <button onClick={props.onLogout}>Logout</button>
+            </li>
+          </>
         )}
       </ul>
     </nav>
