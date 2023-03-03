@@ -1,3 +1,4 @@
+import { ErrorBoundary } from './components/ErrorBoundary';
 import UserFinder from './components/UserFinder';
 import UsersContext from './store/users-context';
 
@@ -9,12 +10,14 @@ const DUMMY_USERS = [
 
 function App() {
   const usersContext = {
-    users: DUMMY_USERS
-  }
+    users: DUMMY_USERS,
+  };
 
   return (
     <UsersContext.Provider value={usersContext}>
-      <UserFinder />
+      <ErrorBoundary>
+        <UserFinder />
+      </ErrorBoundary>
     </UsersContext.Provider>
   );
 }

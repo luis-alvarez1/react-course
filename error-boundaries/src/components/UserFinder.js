@@ -24,7 +24,7 @@ class UserFinder extends Component {
     if (prevState.searchTerm !== this.state.searchTerm) {
       this.setState({
         filteredUsers: this.context.users.filter((user) =>
-          user.name.includes(this.state.searchTerm)
+          user.name.includes(this.state.searchTerm),
         ),
       });
     }
@@ -36,12 +36,12 @@ class UserFinder extends Component {
 
   render() {
     return (
-      <Fragment>
+      <>
         <div className={classes.finder}>
           <input type='search' onChange={this.searchChangeHandler.bind(this)} />
         </div>
         <Users users={this.state.filteredUsers} />
-      </Fragment>
+      </>
     );
   }
 }
