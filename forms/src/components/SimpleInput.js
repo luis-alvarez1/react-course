@@ -1,55 +1,43 @@
 import React, { useEffect, useState } from 'react';
 import { validateEmail } from '../helpers/email';
+import { useInput } from '../hooks/useInput';
 
-const SimpleInput = (props) => {
-  const [enteredName, setEnteredName] = useState('');
-  const [enteredEmail, setEnteredEmail] = useState('');
-
-  const [isInputEdited, setisInputEdited] = useState(false);
-  const [isEmailEdited, setIsEmailEdited] = useState(false);
-
-  const isInputValid = enteredName.trim() !== '';
-  const isInvalid = !isInputValid && isInputEdited;
-
-  const isEmailInvalid = !(validateEmail(enteredEmail) && enteredEmail !== '') && isEmailEdited;
+const SimpleInput = () => {
+  const {
+    value: enteredName,
+    isValueValid: isInputValid,
+    hasError: isInvalid,
+    valueChangeHandler: inputHandler,
+    valueBlurHandler: inputBlurHandler,
+    reset: resetName,
+  } = useInput((value) => value.trim() !== '');
+  const {
+    value: enteredEmail,
+    isValueValid: isEmailValid,
+    hasError: isEmailInvalid,
+    valueChangeHandler: emailHandler,
+    valueBlurHandler: emailBlurHandler,
+    reset: resetEmail,
+  } = useInput((value) => validateEmail(value));
 
   const [isFormValid, setIsFormValid] = useState(false);
 
   useEffect(() => {
-    if (!isEmailInvalid && isInputValid) {
+    if (isEmailValid && isInputValid) {
       setIsFormValid(true);
     } else {
       setIsFormValid(false);
     }
-  }, [isEmailInvalid, isInputValid]);
-
-  const emailHandler = (event) => {
-    setEnteredEmail(event.target.value);
-  };
-
-  const inputHandler = (event) => {
-    setEnteredName(event.target.value);
-  };
-
-  const inputBlurHandler = () => {
-    setisInputEdited(true);
-  };
-
-  const emailBlurHandler = () => {
-    setIsEmailEdited(true);
-  };
+  }, [isEmailValid, isInputValid]);
 
   const submitHandler = (event) => {
     event.preventDefault();
-
-    setisInputEdited(true);
-
     if (!isInputValid) {
       return;
     }
 
-    setEnteredName('');
-    setisInputEdited(false);
+    resetName();
+    resetEmail();
   };
 
   return (
