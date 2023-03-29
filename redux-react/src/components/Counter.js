@@ -38,7 +38,7 @@ const Counter = () => {
       <h1>Redux Counter</h1>
       <div className={classes.value}>{counter}</div>
       <div className={classes.input}>
-        <label>Increase By</label>
+        <label>Increase By:</label>
         <input
           id='increase_by'
           type='number'
