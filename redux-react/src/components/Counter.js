@@ -6,16 +6,23 @@ import {
   INCREMENT_COUNTER,
   RESET_COUNTER,
 } from '../redux/types/counterTypes';
+import { useState } from 'react';
 
 const Counter = () => {
+  const [increaseByValue, setIncreaseByValue] = useState(0);
   const dispatch = useDispatch();
   const counter = useSelector((state) => state.counter);
+
+  const increaseByValueChange = (event) => {
+    const number = parseInt(event.target.value);
+    setIncreaseByValue(number);
+  };
 
   const incrementHandler = () => {
     dispatch({ type: INCREMENT_COUNTER });
   };
   const increaseByHandler = () => {
-    dispatch({ type: INCREASE_BY, payload: 5 });
+    dispatch({ type: INCREASE_BY, payload: increaseByValue });
   };
   const decrementHandler = () => {
     dispatch({ type: DECREMENT_COUNTER });
@@ -30,14 +37,18 @@ const Counter = () => {
     <main className={classes.counter}>
       <h1>Redux Counter</h1>
       <div className={classes.value}>{counter}</div>
-      <div>
-        {/* TODO: Create input to customize the multiplier */}
+      <div className={classes.input}>
         <label>Increase By</label>
-        <input id='increase_by' />
+        <input
+          id='increase_by'
+          type='number'
+          value={increaseByValue}
+          onChange={increaseByValueChange}
+        />
       </div>
       <div>
         <button onClick={incrementHandler}>Increment</button>
-        <button onClick={increaseByHandler}>Increase by 5</button>
+        <button onClick={increaseByHandler}>Increase by {increaseByValue}</button>
 
         <button onClick={resetHandler}>Reset</button>
         <button onClick={decrementHandler}>Decrement</button>

@@ -25,3 +25,23 @@
 .counter button {
   margin: 1rem;
 }
+
+.input {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.input input {
+  width: 3rem;
+  font-size: 1rem;
+  color: #fff;
+  background-color: #66369c;
+  text-align: center;
+}
+
+.input label,
+.input input {
+  margin: 0.4rem;
+}
