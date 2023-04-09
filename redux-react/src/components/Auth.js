@@ -2,7 +2,7 @@ import { validateEmail } from '../helpers/email';
 import { useInput } from '../hooks/useInput';
 import { authActions } from '../redux/reducers/authReducer';
 import classes from './Auth.module.css';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 const Auth = () => {
   const dispatch = useDispatch();
