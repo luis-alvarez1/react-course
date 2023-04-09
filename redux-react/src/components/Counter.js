@@ -8,7 +8,6 @@ const Counter = () => {
   const [increaseByValue, setIncreaseByValue] = useState(0);
   const counter = useSelector((state) => state.counter.value);
   const isCounterVisible = useSelector((state) => state.counter.isVisible);
-  const isAuth = useSelector((state) => state.auth.isAuth);
 
   const increaseByValueChange = (event) => {
     const number = parseInt(event.target.value);
@@ -33,30 +32,26 @@ const Counter = () => {
   };
 
   return (
-    <>
-      {isAuth && (
-        <main className={classes.counter}>
-          <h1>Redux Counter</h1>
-          {isCounterVisible && <div className={classes.value}>{counter}</div>}
-          <div className={classes.input}>
-            <label>Increase By:</label>
-            <input
-              id='increase_by'
-              type='number'
-              value={increaseByValue}
-              onChange={increaseByValueChange}
-            />
-          </div>
-          <div>
-            <button onClick={incrementHandler}>Increment</button>
-            <button onClick={increaseByHandler}>Increase by {increaseByValue}</button>
-            <button onClick={resetHandler}>Reset</button>
-            <button onClick={decrementHandler}>Decrement</button>
-          </div>
-          <button onClick={toggleCounterHandler}>Toggle Counter</button>
-        </main>
-      )}
-    </>
+    <main className={classes.counter}>
+      <h1>Redux Counter</h1>
+      {isCounterVisible && <div className={classes.value}>{counter}</div>}
+      <div className={classes.input}>
+        <label>Increase By:</label>
+        <input
+          id='increase_by'
+          type='number'
+          value={increaseByValue}
+          onChange={increaseByValueChange}
+        />
+      </div>
+      <div>
+        <button onClick={incrementHandler}>Increment</button>
+        <button onClick={increaseByHandler}>Increase by {increaseByValue}</button>
+        <button onClick={resetHandler}>Reset</button>
+        <button onClick={decrementHandler}>Decrement</button>
+      </div>
+      <button onClick={toggleCounterHandler}>Toggle Counter</button>
+    </main>
   );
 };
 
