@@ -1,31 +1,27 @@
-import {
-  DECREMENT_COUNTER,
-  INCREASE_BY,
-  INCREMENT_COUNTER,
-  RESET_COUNTER,
-  TOGGLE_COUNTER,
-} from '../types/counterTypes';
+import { createSlice } from '@reduxjs/toolkit';
 
-const initialState = { counter: 0, isVisible: true };
+const initialState = { value: 0, isVisible: true };
 
-export const counterReducer = (state = initialState, { type, payload }) => {
-  switch (type) {
-    case INCREMENT_COUNTER:
-      return { counter: state.counter + 1, ...state };
+export const counterSlice = createSlice({
+  name: 'counter',
+  initialState,
+  reducers: {
+    increment: (state) => {
+      state.value++;
+    },
+    increaseBy: (state, action) => {
+      state.value = state.value + action.payload;
+    },
+    decrement: (state) => {
+      state.value--;
+    },
+    toggleCounter: (state) => {
+      state.isVisible = !state.isVisible;
+    },
+    resetCounter: (state) => {
+      state.value = initialState.value;
+    },
+  },
+});
 
-    case INCREASE_BY:
-      return { counter: state.counter + payload, ...state };
-
-    case DECREMENT_COUNTER:
-      return { counter: state.counter - 1, ...state };
-
-    case TOGGLE_COUNTER:
-      return { ...state, isVisible: !state.isVisible };
-
-    case RESET_COUNTER:
-      return initialState;
-
-    default:
-      return state;
-  }
-};
+export const counterActions = counterSlice.actions;

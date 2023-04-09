@@ -1,19 +1,13 @@
 import classes from './Counter.module.css';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  DECREMENT_COUNTER,
-  INCREASE_BY,
-  INCREMENT_COUNTER,
-  RESET_COUNTER,
-  TOGGLE_COUNTER,
-} from '../redux/types/counterTypes';
 import { useState } from 'react';
+import { counterActions } from '../redux/reducers/counterReducer';
 
 const Counter = () => {
-  const [increaseByValue, setIncreaseByValue] = useState(0);
   const dispatch = useDispatch();
-  const counter = useSelector((state) => state.counter);
-  const isCounterVisible = useSelector((state) => state.isVisible);
+  const [increaseByValue, setIncreaseByValue] = useState(0);
+  const counter = useSelector((state) => state.counter.value);
+  const isCounterVisible = useSelector((state) => state.counter.isVisible);
 
   const increaseByValueChange = (event) => {
     const number = parseInt(event.target.value);
@@ -21,20 +15,20 @@ const Counter = () => {
   };
 
   const incrementHandler = () => {
-    dispatch({ type: INCREMENT_COUNTER });
+    dispatch(counterActions.increment());
   };
   const increaseByHandler = () => {
-    dispatch({ type: INCREASE_BY, payload: increaseByValue });
+    dispatch(counterActions.increaseBy(increaseByValue));
   };
   const decrementHandler = () => {
-    dispatch({ type: DECREMENT_COUNTER });
+    dispatch(counterActions.decrement());
   };
   const resetHandler = () => {
-    dispatch({ type: RESET_COUNTER });
+    dispatch(counterActions.resetCounter());
   };
 
   const toggleCounterHandler = () => {
-    dispatch({ type: TOGGLE_COUNTER });
+    dispatch(counterActions.toggleCounter());
   };
 
   return (
