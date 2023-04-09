@@ -5,6 +5,7 @@ import {
   INCREASE_BY,
   INCREMENT_COUNTER,
   RESET_COUNTER,
+  TOGGLE_COUNTER,
 } from '../redux/types/counterTypes';
 import { useState } from 'react';
 
@@ -12,6 +13,7 @@ const Counter = () => {
   const [increaseByValue, setIncreaseByValue] = useState(0);
   const dispatch = useDispatch();
   const counter = useSelector((state) => state.counter);
+  const isCounterVisible = useSelector((state) => state.isVisible);
 
   const increaseByValueChange = (event) => {
     const number = parseInt(event.target.value);
@@ -31,12 +33,14 @@ const Counter = () => {
     dispatch({ type: RESET_COUNTER });
   };
 
-  const toggleCounterHandler = () => {};
+  const toggleCounterHandler = () => {
+    dispatch({ type: TOGGLE_COUNTER });
+  };
 
   return (
     <main className={classes.counter}>
       <h1>Redux Counter</h1>
-      <div className={classes.value}>{counter}</div>
+      {isCounterVisible && <div className={classes.value}>{counter}</div>}
       <div className={classes.input}>
         <label>Increase By:</label>
         <input
