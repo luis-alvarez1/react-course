@@ -1,12 +1,15 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { UIActions } from './UISlice';
 
-const initialState = { items: [], totalQuantity: 0 };
+const initialState = { items: [], totalQuantity: 0, changed: false };
 
 export const cartSlice = createSlice({
   name: 'cart',
   initialState,
   reducers: {
+    replaceCart: (state, action) => {
+      state.items = action.payload.items;
+      state.totalQuantity = action.payload.totalQuantity;
+    },
     addItemToCart: (state, action) => {
       const item = action.payload; // new item to be added
       const existingItem = state.items.find((i) => i.id === item.id);
@@ -23,6 +26,7 @@ export const cartSlice = createSlice({
         existingItem.total = existingItem.total + item.price;
       }
       state.totalQuantity++;
+      state.changed = true;
     },
     removeItemFromCart: (state, action) => {
       const idToRemove = action.payload;
@@ -36,53 +40,9 @@ export const cartSlice = createSlice({
       }
 
       state.totalQuantity--;
+      state.changed = true;
     },
   },
 });
-
-export const sendCartData = (cart) => {
-  return async (dispatch) => {
-    dispatch(
-      UIActions.showNotification({
-        status: 'pending',
-        title: 'Sending',
-        message: 'Sending cart data',
-      }),
-    );
-
-    const sendRequest = async () => {
-      const response = await fetch(
-        'https://react-dummy-backend-bc797-default-rtdb.firebaseio.com/cart.json',
-        {
-          method: 'PUT',
-          body: JSON.stringify(cart),
-        },
-      );
-
-      if (!response.ok) {
-        throw new Error('updating failed');
-      }
-    };
-
-    try {
-      await sendRequest();
-      dispatch(
-        UIActions.showNotification({
-          status: 'success',
-          title: 'Done!',
-          message: 'Data sent successfully',
-        }),
-      );
-    } catch (error) {
-      dispatch(
-        UIActions.showNotification({
-          status: 'error',
-          title: 'Failed',
-          message: 'Data did not sent',
-        }),
-      );
-    }
-  };
-};
 
 export const cartActions = cartSlice.actions;

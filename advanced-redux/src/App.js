@@ -4,7 +4,7 @@ import Layout from './components/Layout/Layout';
 import Products from './components/Shop/Products';
 import { useEffect } from 'react';
 import Notification from './components/UI/Notification';
-import { sendCartData } from './redux/reducers/cartSlice';
+import { fetchCartData, sendCartData } from './redux/reducers/cart/cartActions';
 
 let isInitial = true;
 
@@ -15,6 +15,10 @@ function App() {
   const notification = useSelector((state) => state.ui.notification);
 
   useEffect(() => {
+    dispatch(fetchCartData());
+  }, [dispatch]);
+
+  useEffect(() => {
     // checks if it's the first render so it doesn't
     // send an empty object to Firebase
     if (isInitial) {
@@ -22,7 +26,9 @@ function App() {
       return;
     }
 
-    dispatch(sendCartData(cart));
+    if (cart.changed) {
+      dispatch(sendCartData(cart));
+    }
   }, [cart, dispatch]);
 
   return (
