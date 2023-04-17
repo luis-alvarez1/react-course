@@ -1,26 +1,14 @@
-import { useState } from 'react';
 import './App.css';
 import { NewTodo } from './components/NewTodo';
 import { Todos } from './components/Todos';
-import { Todo } from './types/Todo';
+import { TodoContextProvider } from './store/TodoContextProvider';
 
 function App() {
-  const [todos, setTodos] = useState<Todo[]>([
-    new Todo('Todo 1'),
-    new Todo('Todo 2'),
-    new Todo('Todo 3'),
-  ]);
-
-  const onAddToDo = (todoText: string) => {
-    setTodos((prevTodos: Todo[]) => {
-      return [...prevTodos, new Todo(todoText)];
-    });
-  };
   return (
-    <div>
-      <NewTodo onAddToDo={onAddToDo} />
-      <Todos items={todos} />
-    </div>
+    <TodoContextProvider>
+      <NewTodo />
+      <Todos />
+    </TodoContextProvider>
   );
 }
 

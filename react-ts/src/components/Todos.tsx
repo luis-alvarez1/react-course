@@ -1,16 +1,16 @@
-import { Todo } from '../types/Todo';
-import { TodoElement } from './Todo';
+import { useContext } from 'react';
+import { TodoElement } from './TodoElement';
+import classes from './Todos.module.css';
+import { TodoContext } from '../store/todos-context';
 
-type Props = {
-  items: Todo[];
-};
+export const Todos: React.FC = () => {
+  const { todos: items, removeTodo: onRemoveTodo } = useContext(TodoContext);
 
-export const Todos: React.FC<Props> = ({ items }) => {
   return (
     <>
-      <ul>
+      <ul className={classes.todos}>
         {items.map((todo) => (
-          <TodoElement key={todo.id} todo={todo} />
+          <TodoElement onRemoveTodo={onRemoveTodo} key={todo.id} todo={todo} />
         ))}
       </ul>
     </>
