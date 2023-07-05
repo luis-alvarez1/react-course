@@ -11,7 +11,7 @@ export const Error = () => {
 
   useEffect(() => {
     if (error.status === 500) {
-      const data = JSON.parse(error.data);
+      const data = error.data;
       setMessage(data.message);
     }
     if (error.status === 404) {
